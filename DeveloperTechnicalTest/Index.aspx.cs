@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TicTacToe
 {
@@ -21,12 +18,18 @@ namespace TicTacToe
         [WebMethod]
         public static string RefreshBoard(string board, string player, string play)
         {
+            bool success = false;
+
             var playingOn = GetCurrentBoard(board, player);
 
             if (string.IsNullOrEmpty(play))
+            {
+                playingOn.LastPlaySuccess = success;
                 return string.Empty;
+            }
 
-            var success = MakePlay(playingOn, player, play);
+            success = MakePlay(playingOn, player, play);
+            playingOn.LastPlaySuccess = success;
 
             var json = new JavaScriptSerializer().Serialize(playingOn);
             return json;
@@ -53,6 +56,7 @@ namespace TicTacToe
             board.Name = boardName;
             board.Player1 = player;
             board.GameStarted = DateTime.Now;
+            board.LastPlaySuccess = false;
 
             boards.Add(board);
 
@@ -84,10 +88,14 @@ namespace TicTacToe
                 return false; // player not in game
             }
 
+            if (player.WaitingForOpponent) return false;
+
             int position = -1;
             int.TryParse(play, out position);
 
-            return board.Play(player, position);
+            var gameOver = board.Play(player, position);
+
+            return true;
         }
     }
 }

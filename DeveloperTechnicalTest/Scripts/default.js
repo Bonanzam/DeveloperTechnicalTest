@@ -4,14 +4,14 @@
         if ($(this).hasClass("marked")) return;
 
         var play = $('#play').val();
-        //var player = $('#player').val() || ;
+        var marker = $('#next_marker').val();
 
         if (play) {
             $('#' + play).removeClass("marked");
             $('#' + play).val('');
         }
 
-        $(this).addClass("marked").val('X');
+        $(this).addClass("marked").val(marker);
         $('#play').val(event.target.id);
     });
 
@@ -29,7 +29,38 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (retValue) {
-                // redraw the tic tac toe table
+                // once success, remove player mark
+                $('#play').val('');
+
+                var game = eval('(' + retValue.d + ')');
+
+                console.log(game);
+
+                if (game.IsGameOver == true) {
+                    if (game.IsDraw == false) {
+                        alert('you won');
+                    } else {
+                        alert('the game is a draw');
+                    }
+                } else {
+
+                    for (var i = 0; i < 9; i++) {
+                        var box = $('#'+i);
+                        var mark = game.field[i];
+
+                        if (mark == "-1") {
+                            box.removeClass('marked').val('');
+                        } else {
+                            box.addClass('marked').val(mark);
+                        }
+                    }
+
+                }
+
+                if (game.LastPlaySuccess) {
+                    var marker = $('#next_marker').val();
+                    $('#next_marker').val(marker == "X" ? "O" : "X");
+                }
             }
         });
     });

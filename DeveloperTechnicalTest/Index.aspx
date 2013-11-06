@@ -89,7 +89,7 @@
             </table>
 
         <input id="play" type="hidden" />
-        <input id="player" type="hidden" />
+        <input id="next_marker" type="hidden" value="X" />
     </div>
 
     <script type="text/javascript" src="Scripts/jquery-1.9.1.min.js"></script>

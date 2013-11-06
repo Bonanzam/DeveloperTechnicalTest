@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace TicTacToe
 {
     public class Board
     {
         public bool IsGameOver { get; private set; }
-
         public bool IsDraw { get; private set; }
-
         public string Name { get; set; }
-
         public Player Player1 { get; set; }
-
         public Player Player2 { get; set; }
         public DateTime GameStarted { get; set; }
+        public bool LastPlaySuccess { get; set; }
 
-        private readonly string[] field = new string[9];
+        public readonly string[] field = new string[9];
         private int movesLeft = 9;
 
         public Board()
@@ -96,9 +92,28 @@ namespace TicTacToe
                 return false;
 
             field[position] = player.Simbolo;
-            player.WaitingForOpponent = true;
+            //player.WaitingForOpponent = true;
+            UpdatePlayerTurn(player);
 
             return true;
+        }
+
+        private void UpdatePlayerTurn(Player curPlayer)
+        {
+            if (Player1 != null && curPlayer.Name.Equals(Player1.Name))
+            {
+                Player1.WaitingForOpponent = true;
+
+                if (Player2 != null)
+                    Player2.WaitingForOpponent = false;
+            }
+            else if (Player2 != null && curPlayer.Name.Equals(Player2.Name))
+            {
+                Player2.WaitingForOpponent = true;
+
+                if (Player1 != null)
+                    Player1.WaitingForOpponent = false;
+            }
         }
     }
 }
