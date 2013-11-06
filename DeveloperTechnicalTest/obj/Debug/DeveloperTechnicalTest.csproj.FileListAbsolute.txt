@@ -1,0 +1,5 @@
+B:\Development\VS Workspace\DeveloperTechnicalTest\DeveloperTechnicalTest\bin\DeveloperTechnicalTest.dll
+B:\Development\VS Workspace\DeveloperTechnicalTest\DeveloperTechnicalTest\bin\DeveloperTechnicalTest.pdb
+B:\Development\VS Workspace\DeveloperTechnicalTest\DeveloperTechnicalTest\obj\Debug\DeveloperTechnicalTest.dll
+B:\Development\VS Workspace\DeveloperTechnicalTest\DeveloperTechnicalTest\obj\Debug\DeveloperTechnicalTest.pdb
+B:\Development\VS Workspace\DeveloperTechnicalTest\DeveloperTechnicalTest\obj\Debug\DeveloperTechnicalTest.csprojResolveAssemblyReference.cache
